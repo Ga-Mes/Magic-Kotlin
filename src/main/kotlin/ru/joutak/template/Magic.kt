@@ -4,10 +4,10 @@ import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
-class EmptyPlugin : JavaPlugin() {
+class Magic : JavaPlugin() {
     companion object {
         @JvmStatic
-        lateinit var instance: EmptyPlugin
+        lateinit var instance: Magic
     }
 
     private var customConfig = YamlConfiguration()

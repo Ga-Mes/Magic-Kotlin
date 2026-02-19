@@ -1,10 +1,10 @@
 name: ${NAME}
 version: ${VERSION}
 api-version: ${MINECRAFT_VERSION}
-main: ru.joutak.template.EmptyPlugin
-description: 'A template plugin'
-authors: ['EnderDissa', 'Stunnerer', 's4dnex']
-contributors: ['technosimp']
+main: ru.joutak.template.Magic
+description: 'A magic plugin'
+authors: ['Ga_Mes']
+contributors: ['']
 website: ${WEBSITE}
 
 depend: []
