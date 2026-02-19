@@ -25,6 +25,10 @@ class CustomItem {
                     meta.lore(listOf<Component>(Component.text("Даёт носителю невероятную:"), Component.text("Резистентность")))
                     meta.addEnchant(Enchantment.LURE, 1, true)
                     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
+
+                    item.setItemMeta(meta)
+
+                    return item
                 }
                 CustomType.ARMOR -> {
                     val item = ItemStack(Material.RESIN_BRICK)
@@ -38,6 +42,10 @@ class CustomItem {
                     meta.lore(listOf<Component>(Component.text("Даёт носителю невероятную:"), Component.text("Силу")))
                     meta.addEnchant(Enchantment.LURE, 1, true)
                     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
+
+                    item.setItemMeta(meta)
+
+                    return item
                 }
                 CustomType.JUMP -> {
                     val item = ItemStack(Material.AMETHYST_SHARD)
@@ -51,10 +59,12 @@ class CustomItem {
                     meta.lore(listOf<Component>(Component.text("Даёт носителю невероятную:"), Component.text("Прыгучесть")))
                     meta.addEnchant(Enchantment.LURE, 1, true)
                     meta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
+
+                    item.setItemMeta(meta)
+
+                    return item
                 }
             }
-
-            return null
         }
     }
 }

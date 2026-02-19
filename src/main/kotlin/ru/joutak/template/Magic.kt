@@ -2,6 +2,7 @@ package ru.joutak.template
 
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
+import ru.joutak.template.event.JoinEvent
 import java.io.File
 
 class Magic : JavaPlugin() {
@@ -28,6 +29,7 @@ class Magic : JavaPlugin() {
         loadConfig()
 
         // Register commands and events
+        server.pluginManager.registerEvents(JoinEvent(instance), instance)
 
         logger.info("Плагин ${pluginMeta.name} версии ${pluginMeta.version} включен!")
     }
