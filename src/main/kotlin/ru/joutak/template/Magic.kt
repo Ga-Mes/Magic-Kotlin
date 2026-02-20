@@ -35,7 +35,7 @@ class Magic : JavaPlugin() {
         val playerDataManager = PlayerDataManager(instance, customItemManager)
 
         // Register commands and events
-        server.pluginManager.registerEvents(JoinEvent(instance, playerDataManager), instance)
+        server.pluginManager.registerEvents(JoinEvent(playerDataManager), instance)
         server.pluginManager.registerEvents(QuitEvent(playerDataManager), instance)
 
         logger.info("Плагин ${pluginMeta.name} версии ${pluginMeta.version} включен!")
