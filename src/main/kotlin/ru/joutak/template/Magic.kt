@@ -3,6 +3,7 @@ package ru.joutak.template
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import ru.joutak.template.event.JoinEvent
+import ru.joutak.template.item.CustomItemManager
 import java.io.File
 
 class Magic : JavaPlugin() {
@@ -28,8 +29,10 @@ class Magic : JavaPlugin() {
 
         loadConfig()
 
+        val customItemManager = CustomItemManager(instance)
+
         // Register commands and events
-        server.pluginManager.registerEvents(JoinEvent(instance), instance)
+        server.pluginManager.registerEvents(JoinEvent(instance, customItemManager), instance)
 
         logger.info("Плагин ${pluginMeta.name} версии ${pluginMeta.version} включен!")
     }
