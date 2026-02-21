@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import ru.joutak.template.command.PlayerDataCommand
 import ru.joutak.template.data.PlayerDataManager
 import ru.joutak.template.event.GenerateEvent
+import ru.joutak.template.event.InventoryChangeEvent
 import ru.joutak.template.event.JoinEvent
 import ru.joutak.template.event.QuitEvent
 import ru.joutak.template.item.CustomItemManager
@@ -42,6 +43,7 @@ class Magic : JavaPlugin() {
         server.pluginManager.registerEvents(JoinEvent(playerDataManager), instance)
         server.pluginManager.registerEvents(QuitEvent(playerDataManager), instance)
         server.pluginManager.registerEvents(GenerateEvent(customItemManager), this)
+        server.pluginManager.registerEvents(InventoryChangeEvent(playerDataManager, instance), this)
 
         logger.info("Плагин ${pluginMeta.name} версии ${pluginMeta.version} включен!")
     }
