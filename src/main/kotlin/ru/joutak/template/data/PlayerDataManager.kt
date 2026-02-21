@@ -4,13 +4,20 @@ import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import ru.joutak.template.item.CustomItemManager
 import ru.joutak.template.item.CustomType
+import java.time.Instant
 import java.util.UUID
 
 class PlayerDataManager(plugin: Plugin, private val customItemManager: CustomItemManager) {
     val states = mutableMapOf<UUID, MutableMap<CustomType, Boolean>>()
 
+    val times = mutableMapOf<UUID, Instant>()
+
+    val saver = Saver(plugin, this)
+
     fun load(player: Player) {
         states.put(player.uniqueId, mutableMapOf())
+
+        times.put(player.uniqueId, Instant.now())
 
         for (name in CustomType.entries) {
             states[player.uniqueId]?.put(name, false)
@@ -31,6 +38,10 @@ class PlayerDataManager(plugin: Plugin, private val customItemManager: CustomIte
                 }
             }
         }
+    }
+
+    fun save(player: Player) {
+        saver.save(player)
     }
 
     fun unLoad(player: Player) {

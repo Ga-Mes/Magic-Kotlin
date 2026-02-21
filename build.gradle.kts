@@ -8,6 +8,7 @@ project.version = version
 plugins {
     alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.shadow)
+    kotlin("plugin.serialization") version "1.9.0"
 }
 
 repositories {
@@ -23,6 +24,7 @@ repositories {
 dependencies {
     compileOnly(libs.kotlin)
     compileOnly(libs.paper)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }
 
 kotlin {

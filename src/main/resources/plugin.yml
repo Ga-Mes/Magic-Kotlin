@@ -7,6 +7,12 @@ authors: ['Ga_Mes']
 contributors: ['']
 website: ${WEBSITE}
 
+commands:
+  playerdata:
+    description: Сохраняет данные игрока
+    usage: /<command> save
+    aliases: [pdata]
+
 depend: []
 libraries:
   - 'org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN_VERSION}'

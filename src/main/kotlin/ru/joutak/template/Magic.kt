@@ -2,6 +2,7 @@ package ru.joutak.template
 
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
+import ru.joutak.template.command.PlayerDataCommand
 import ru.joutak.template.data.PlayerDataManager
 import ru.joutak.template.event.JoinEvent
 import ru.joutak.template.event.QuitEvent
@@ -35,6 +36,8 @@ class Magic : JavaPlugin() {
         val playerDataManager = PlayerDataManager(instance, customItemManager)
 
         // Register commands and events
+        getCommand("playerdata")?.setExecutor(PlayerDataCommand(playerDataManager))
+
         server.pluginManager.registerEvents(JoinEvent(playerDataManager), instance)
         server.pluginManager.registerEvents(QuitEvent(playerDataManager), instance)
 
