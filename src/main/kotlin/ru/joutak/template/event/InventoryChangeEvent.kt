@@ -4,10 +4,10 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityDropItemEvent
 import org.bukkit.event.entity.EntityPickupItemEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryDragEvent
+import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.plugin.Plugin
 import ru.joutak.template.data.PlayerDataManager
 
@@ -35,9 +35,7 @@ class InventoryChangeEvent(private val playerDataManager: PlayerDataManager, pri
     }
 
     @EventHandler
-    fun onDrop(event: EntityDropItemEvent) {
-        if (event.entity is Player) {
-            Bukkit.getScheduler().runTask(plugin, Runnable {playerDataManager.update(event.entity as Player)})
-        }
+    fun onDrop(event: PlayerDropItemEvent) {
+        Bukkit.getScheduler().runTask(plugin, Runnable {playerDataManager.update(event.player)})
     }
 }

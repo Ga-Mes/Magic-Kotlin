@@ -9,8 +9,6 @@ class JoinEvent(private val playerDataManager: PlayerDataManager) : Listener {
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
-        val player = event.player
-
-        playerDataManager.load(player)
+        playerDataManager.load(event.player)
     }
 }

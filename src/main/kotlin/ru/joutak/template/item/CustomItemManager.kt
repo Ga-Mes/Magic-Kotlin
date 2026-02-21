@@ -23,7 +23,7 @@ class CustomItemManager(plugin: Plugin) {
 
                 meta.persistentDataContainer.set(key, PersistentDataType.INTEGER, customType.ordinal)
                 meta.displayName(Component.text("Амулет защиты").decoration(TextDecoration.ITALIC, false))
-                meta.lore(listOf(Component.text("Даёт носящему невероятную:"), Component.text("Защиту")))
+                meta.lore(listOf(Component.text("Создаёт ощущение ").append(Component.text("безопасности").decoration(TextDecoration.OBFUSCATED, true))))
                 meta.addEnchant(Enchantment.LURE, 1, true)
                 meta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
 
@@ -38,7 +38,7 @@ class CustomItemManager(plugin: Plugin) {
 
                 meta.persistentDataContainer.set(key, PersistentDataType.INTEGER, customType.ordinal)
                 meta.displayName(Component.text("Амулет силы").decoration(TextDecoration.ITALIC, false))
-                meta.lore(listOf(Component.text("Даёт носящему невероятную:"), Component.text("Силу")))
+                meta.lore(listOf(Component.text("Издаёт странный импульс...")))
                 meta.addEnchant(Enchantment.LURE, 1, true)
                 meta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
 
@@ -53,7 +53,7 @@ class CustomItemManager(plugin: Plugin) {
 
                 meta.persistentDataContainer.set(key, PersistentDataType.INTEGER, customType.ordinal)
                 meta.displayName(Component.text("Амулет прыжка").decoration(TextDecoration.ITALIC, false))
-                meta.lore(listOf(Component.text("Даёт носящему невероятную:"), Component.text("Прыгучесть")))
+                meta.lore(listOf(Component.text("Норовит выпрыгнуть из рук!")))
                 meta.addEnchant(Enchantment.LURE, 1, true)
                 meta.addItemFlags(ItemFlag.HIDE_ENCHANTS)
 

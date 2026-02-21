@@ -14,12 +14,12 @@ class GenerateEvent(private val customItemManager: CustomItemManager) : Listener
 
         when (structure) {
             "minecraft:chests/jungle_temple" -> {
-                if (Math.random() < 0.5) {
+                if (Math.random() < 0.3) {
                     event.loot.add(customItemManager.create(CustomType.ARMOR))
                 }
             }
             "minecraft:chests/woodland_mansion" -> {
-                if (Math.random() < 0.5) {
+                if (Math.random() < 0.4) {
                     event.loot.add(customItemManager.create(CustomType.HIT))
                 }
             }

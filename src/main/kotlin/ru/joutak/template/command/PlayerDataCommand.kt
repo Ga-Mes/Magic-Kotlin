@@ -13,11 +13,12 @@ class PlayerDataCommand(private val playerDataManager: PlayerDataManager) : Comm
                 if (args.size == 1) {
                     if (args[0].equals("save", ignoreCase = true)) {
                         playerDataManager.save(sender)
+                        return true
                     }
                 }
             }
         }
 
-        return true
+        return false
     }
 }

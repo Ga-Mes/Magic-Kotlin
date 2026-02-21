@@ -26,7 +26,7 @@ class Saver(private val plugin: Plugin, private val playerDataManager: PlayerDat
                     return
                 }
             } catch (e: Exception) {
-                plugin.server.consoleSender.sendMessage(Component.text("[${plugin.pluginMeta.name}] Не удалось создать файл с информацией игроков..."))
+                plugin.server.consoleSender.sendMessage(Component.text("[${plugin.pluginMeta.name}] Не удалось создать файл с информацией игроков (${e.message})..."))
                 return
             }
         }
@@ -37,15 +37,15 @@ class Saver(private val plugin: Plugin, private val playerDataManager: PlayerDat
 
         for (type in playerDataManager.states[player.uniqueId]!!.keys.iterator()) {
             if (playerDataManager.states[player.uniqueId]!![type] == true) {
-                hadItems.add("$type")
+                hadItems.add("$type (${type.ordinal})")
             }
         }
 
         val items = hadItems.joinToString(", ")
 
-        val timeDifference = Duration.between(playerDataManager.times[player.uniqueId], Instant.now()).toMinutes()
+        val time = Duration.between(playerDataManager.times[player.uniqueId], Instant.now()).toMinutes()
 
-        val playerData = PlayerData(health, items, timeDifference)
+        val playerData = PlayerData(health, items, time)
 
         val players: MutableMap<String, PlayerData> =
             if (file.exists() && file.length() > 0) {

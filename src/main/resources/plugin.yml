@@ -12,6 +12,12 @@ commands:
     description: Сохраняет данные игрока
     usage: /<command> save
     aliases: [pdata]
+    default: true
+  customgive:
+    description: Выдаёт кастомный предмет
+    usage: /<command> id
+    aliases: [cgive]
+    default: op
 
 depend: []
 libraries:
