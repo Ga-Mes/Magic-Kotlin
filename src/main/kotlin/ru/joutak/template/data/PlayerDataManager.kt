@@ -10,9 +10,9 @@ import java.util.UUID
 class PlayerDataManager(plugin: Plugin, private val customItemManager: CustomItemManager) {
     val states = mutableMapOf<UUID, MutableMap<CustomType, Boolean>>()
 
-    val saver = Saver(plugin, this)
-
     val times = mutableMapOf<UUID, Instant>()
+
+    val saver = Saver(plugin)
 
     fun load(player: Player) {
         states.put(player.uniqueId, mutableMapOf())
@@ -41,10 +41,14 @@ class PlayerDataManager(plugin: Plugin, private val customItemManager: CustomIte
     }
 
     fun save(player: Player) {
-        saver.save(player)
+        saver.save(player, states, times)
     }
 
     fun unLoad(player: Player) {
         states.remove(player.uniqueId)
+    }
+
+    fun fileSave() {
+        saver.stop()
     }
 }

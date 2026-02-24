@@ -5,16 +5,69 @@ import kotlinx.serialization.json.Json
 import net.kyori.adventure.text.Component
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
+import org.bukkit.scheduler.BukkitRunnable
+import ru.joutak.template.item.CustomType
 import java.io.File
 import java.time.Duration
 import java.time.Instant
+import java.util.UUID
 
-class Saver(private val plugin: Plugin, private val playerDataManager: PlayerDataManager) {
+class Saver {
+    val playersData = mutableMapOf<String, PlayerData>()
+
     val json = Json { prettyPrint = true }
 
-    fun save(player: Player) {
+    val updater = object : BukkitRunnable() {
+        override fun run() {
+            update()
+        }
+    }
+
+    val plugin: Plugin
+
+    constructor(plugin: Plugin) {
+        this.plugin = plugin
+
+        updater.runTaskTimer(plugin, 0L, 1200L)
+    }
+
+    fun save(player: Player, states: MutableMap<UUID, MutableMap<CustomType, Boolean>>, times: MutableMap<UUID, Instant>) {
         val file = File(plugin.dataFolder, "playerdata.json")
 
+        if (!check(file)) {
+            return
+        }
+
+        val health = player.health
+
+        val hadItems = mutableListOf<String>()
+
+        for (type in states[player.uniqueId]!!.keys.iterator()) {
+            if (states[player.uniqueId]!![type] == true) {
+                hadItems.add("$type (${type.ordinal})")
+            }
+        }
+
+        val items = hadItems.joinToString(", ")
+
+        val time = Duration.between(times[player.uniqueId], Instant.now()).toMinutes()
+
+        val playerData = PlayerData(health, items, time)
+
+        playersData.put("${player.uniqueId}", playerData)
+    }
+
+    fun update() {
+        val file = File(plugin.dataFolder, "playerdata.json")
+
+        if (!check(file)) {
+            return
+        }
+
+        file.writeText(json.encodeToString(playersData))
+    }
+
+    fun check(file: File): Boolean {
         if (!file.exists()) {
             try {
                 val success = file.createNewFile()
@@ -23,39 +76,20 @@ class Saver(private val plugin: Plugin, private val playerDataManager: PlayerDat
                     plugin.server.consoleSender.sendMessage(Component.text("[${plugin.pluginMeta.name}] Файл создан!"))
                 } else {
                     plugin.server.consoleSender.sendMessage(Component.text("[${plugin.pluginMeta.name}] Не удалось создать файл с информацией игроков..."))
-                    return
+                    return false
                 }
             } catch (e: Exception) {
                 plugin.server.consoleSender.sendMessage(Component.text("[${plugin.pluginMeta.name}] Не удалось создать файл с информацией игроков (${e.message})..."))
-                return
+                return false
             }
         }
 
-        val health = player.health
+        return true
+    }
 
-        val hadItems = mutableListOf<String>()
+    fun stop() {
+        updater.cancel()
 
-        for (type in playerDataManager.states[player.uniqueId]!!.keys.iterator()) {
-            if (playerDataManager.states[player.uniqueId]!![type] == true) {
-                hadItems.add("$type (${type.ordinal})")
-            }
-        }
-
-        val items = hadItems.joinToString(", ")
-
-        val time = Duration.between(playerDataManager.times[player.uniqueId], Instant.now()).toMinutes()
-
-        val playerData = PlayerData(health, items, time)
-
-        val players: MutableMap<String, PlayerData> =
-            if (file.exists() && file.length() > 0) {
-                Json.decodeFromString(file.readText())
-            } else {
-                mutableMapOf()
-            }
-
-        players.put("${player.uniqueId}", playerData)
-
-        file.writeText(json.encodeToString(players))
+        update()
     }
 }

@@ -18,6 +18,7 @@ class Magic : JavaPlugin() {
     companion object {
         @JvmStatic
         lateinit var instance: Magic
+        lateinit var playerDataManager: PlayerDataManager
     }
 
     private var customConfig = YamlConfiguration()
@@ -38,7 +39,8 @@ class Magic : JavaPlugin() {
         loadConfig()
 
         val customItemManager = CustomItemManager(instance)
-        val playerDataManager = PlayerDataManager(instance, customItemManager)
+
+        playerDataManager = PlayerDataManager(instance, customItemManager)
 
         // Register commands and events
         getCommand("playerdata")?.setExecutor(PlayerDataCommand(playerDataManager))
@@ -57,5 +59,7 @@ class Magic : JavaPlugin() {
     /**
      * Plugin shutdown logic
      */
-    override fun onDisable() {}
+    override fun onDisable() {
+        playerDataManager.fileSave()
+    }
 }
