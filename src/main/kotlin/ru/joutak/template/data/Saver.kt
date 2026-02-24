@@ -13,7 +13,7 @@ import java.time.Instant
 import java.util.UUID
 
 class Saver {
-    val playersData = mutableMapOf<String, PlayerData>()
+    val playersData: MutableMap<String, PlayerData>
 
     val json = Json { prettyPrint = true }
 
@@ -28,16 +28,19 @@ class Saver {
     constructor(plugin: Plugin) {
         this.plugin = plugin
 
+        val file = File(plugin.dataFolder, "playerdata.json")
+
+        playersData =
+            if (file.exists() && file.length() > 0) {
+                json.decodeFromString(file.readText())
+            } else {
+                mutableMapOf()
+            }
+
         updater.runTaskTimer(plugin, 0L, 1200L)
     }
 
     fun save(player: Player, states: MutableMap<UUID, MutableMap<CustomType, Boolean>>, times: MutableMap<UUID, Instant>) {
-        val file = File(plugin.dataFolder, "playerdata.json")
-
-        if (!check(file)) {
-            return
-        }
-
         val health = player.health
 
         val hadItems = mutableListOf<String>()
