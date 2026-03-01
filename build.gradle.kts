@@ -25,6 +25,8 @@ dependencies {
     compileOnly(libs.kotlin)
     compileOnly(libs.paper)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 }
 
 kotlin {
@@ -85,4 +87,8 @@ tasks.shadowJar {
             logger.warn("SERVER_PATH property is not set!")
         }
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
