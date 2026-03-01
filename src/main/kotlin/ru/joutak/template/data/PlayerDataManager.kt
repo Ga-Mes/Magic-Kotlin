@@ -41,11 +41,13 @@ class PlayerDataManager(plugin: Plugin, private val customItemManager: CustomIte
     }
 
     fun save(player: Player) {
-        saver.save(player, states, times)
+        saver.save(player, states[player.uniqueId]!!, times[player.uniqueId]!!)
     }
 
-    fun unLoad(player: Player) {
+    fun unload(player: Player) {
         states.remove(player.uniqueId)
+
+        times.remove(player.uniqueId)
     }
 
     fun fileSave() {

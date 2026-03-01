@@ -9,6 +9,6 @@ class QuitEvent(private val playerDataManager: PlayerDataManager) : Listener {
 
     @EventHandler
     fun onQuit(event: PlayerQuitEvent) {
-        playerDataManager.unLoad(event.player)
+        playerDataManager.unload(event.player)
     }
 }

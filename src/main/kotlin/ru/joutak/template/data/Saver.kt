@@ -8,12 +8,12 @@ import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitRunnable
 import ru.joutak.template.item.CustomType
 import java.io.File
-import java.time.Duration
 import java.time.Instant
-import java.util.UUID
 
 class Saver {
     val playersData: MutableMap<String, PlayerData>
+
+    val playerDataFactory = PlayerDataFactory()
 
     val json = Json { prettyPrint = true }
 
@@ -40,22 +40,8 @@ class Saver {
         updater.runTaskTimer(plugin, 0L, 1200L)
     }
 
-    fun save(player: Player, states: MutableMap<UUID, MutableMap<CustomType, Boolean>>, times: MutableMap<UUID, Instant>) {
-        val health = player.health
-
-        val hadItems = mutableListOf<String>()
-
-        for (type in states[player.uniqueId]!!.keys.iterator()) {
-            if (states[player.uniqueId]!![type] == true) {
-                hadItems.add("$type (${type.ordinal})")
-            }
-        }
-
-        val items = hadItems.joinToString(", ")
-
-        val time = Duration.between(times[player.uniqueId], Instant.now()).toMinutes()
-
-        val playerData = PlayerData(health, items, time)
+    fun save(player: Player, states: MutableMap<CustomType, Boolean>, time: Instant) {
+        val playerData = playerDataFactory.create(player.health, states, time, Instant.now())
 
         playersData.put("${player.uniqueId}", playerData)
     }
